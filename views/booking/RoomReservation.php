@@ -1,3 +1,4 @@
+<h2>Зарезервировать комнату</h2>
 <?php
 
 use yii\helpers\Html;
