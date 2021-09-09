@@ -49,4 +49,9 @@ class Reservation extends \yii\db\ActiveRecord
             'client_id' => 'Client ID',
         ];
     }
+
+    //todo
+    //При сохранении нужен метод пересчёта по типу комнаты и не давать сохранять
+
+
 }

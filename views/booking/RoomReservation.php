@@ -34,19 +34,15 @@ $form = ActiveForm::begin([
     ]
 ]); ?>
 
-<?php if ($rooms): ?>
-    <?= $form->field($reservationForm, 'type_rooms')->dropDownList([
-        '0' => 'Активный',
-        '1' => 'Отключен',
-        '2' => 'Удален'
-    ]);
+<?php if ($roomsFree): ?>
+    <?= $form->field($reservationForm, 'type_rooms')->dropDownList($roomsFree);
     ?>
 <?php endif; ?>
 
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Вход', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Забронировать', ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 <?php ActiveForm::end() ?>

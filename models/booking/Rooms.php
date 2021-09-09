@@ -43,4 +43,12 @@ class Rooms extends \yii\db\ActiveRecord
             'count_rooms' => 'Count Rooms',
         ];
     }
+
+
+    public static function returnName($typeId)
+    {
+        $name = self::findOne($typeId);
+
+        return $name['type_name'];
+    }
 }
