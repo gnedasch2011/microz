@@ -28,8 +28,9 @@ class Clients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['reservation_id'], 'integer'],
-            [['name', 'email'], 'string', 'max' => 45],
+            [['name'], 'string', 'max' => 45],
+            [['email'], 'email'],
+            [['email'], 'unique'],
         ];
     }
 
@@ -45,4 +46,20 @@ class Clients extends \yii\db\ActiveRecord
             'reservation_id' => 'Reservation ID',
         ];
     }
+
+    public static function createNewClient($data)
+    {
+        $existUser = self::find()->where(['email' => $data->email])->one();
+
+        if ($existUser) {
+            return $existUser;
+        } else {
+            $new = new self;
+            $new->attributes = $data->attributes;
+            $new->save();
+            return $new;
+        }
+
+    }
+
 }

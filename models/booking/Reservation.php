@@ -42,7 +42,7 @@ class Reservation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type_rooms' => 'Type Rooms',
+            'type_rooms' => 'Тип комнаты',
             'booking_date' => 'Booking Date',
             'arrival_date' => 'Arrival Date',
             'date_of_departure' => 'Date Of Departure',
@@ -50,8 +50,23 @@ class Reservation extends \yii\db\ActiveRecord
         ];
     }
 
-    //todo
-    //При сохранении нужен метод пересчёта по типу комнаты и не давать сохранять
+    public static function createReservation($reservationForm)
+    {
+
+        //Создать клиента, если он есть, то вернуть id
+
+        $newClient = Clients::createNewClient($reservationForm);
+
+        $newReservation = new self;
+        $newReservation->attributes = $reservationForm->attributes;
+        $newReservation->link('client', $newClient);
+
+    }
+
+    public function getClient()
+    {
+        return $this->hasOne(Clients::className(), ['id' => 'client_id']);
+    }
 
 
 }

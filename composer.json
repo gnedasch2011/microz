@@ -20,7 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "zabrodskiy/yii2-multiparser": "^1.0",
         "sunra/php-simple-html-dom-parser": "1.5.2",
-        "2amigos/yii2-date-time-picker-widget": "*"
+        "2amigos/yii2-date-time-picker-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

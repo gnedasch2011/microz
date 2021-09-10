@@ -24,41 +24,16 @@ class BookingController extends Controller
     public function actionRoomReservation()
     {
         $this->enableCsrfValidation = false;
+
+        $roomsFree = Rooms::getFreeRooms();
+
         $reservationForm = new ReservationForm();
 
-
-        $rooms = ArrayHelper::map(Rooms::find()->all(), 'id', 'count_rooms');
-
-        $roomsReservation = Reservation::find()
-            ->select('type_rooms, COUNT(*) as count')
-            ->groupBy('type_rooms')
-            ->asArray()
-            ->all();
-
-
-        $rooomsResOut = [];
-        $roomsFree = [];
-
-
-        if ($roomsReservation) {
-            //пе
-            foreach ($roomsReservation as $roomsReserv) {
-                $rooomsReservationOut[$roomsReserv['type_rooms']] = $roomsReserv['count'];
-            }
-
-            foreach ($rooms as $typeRoom => $countRoom) {
-                $count = 0;
-
-               $count = $rooms[$typeRoom] - $rooomsReservationOut[$typeRoom];
-                $roomsFree[$typeRoom] = Rooms::returnName($typeRoom) . '(' . $count . ' свободных номера)';
-            }
-        }
-
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
-            //Заполняем массив свободных комнат
-
+            Reservation::createReservation($reservationForm);
         }
-
+        
+        
         return $this->render('/booking/RoomReservation', [
             'reservationForm' => $reservationForm,
             'roomsFree' => $roomsFree ?? false,

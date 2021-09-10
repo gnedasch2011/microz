@@ -11,29 +11,21 @@ $form = ActiveForm::begin([
 ]) ?>
 <?= $form->field($reservationForm, 'name') ?>
 <?= $form->field($reservationForm, 'email') ?>
-<?= DateTimePicker::widget([
-    'model' => $reservationForm,
-    'attribute' => 'arrival_date',
-    'language' => 'es',
-    'size' => 'ms',
-    'clientOptions' => [
-        'autoclose' => true,
-        'format' => 'dd MM yyyy',
-        'todayBtn' => true
-    ]
-]); ?>
 
-<?= DateTimePicker::widget([
-    'model' => $reservationForm,
-    'attribute' => 'date_of_departure',
-    'language' => 'es',
+<?= $form->field($reservationForm, 'arrival_date')->widget(DateTimePicker::className(), [
     'size' => 'ms',
-    'clientOptions' => [
-        'autoclose' => true,
-        'format' => 'dd MM yyyy',
-        'todayBtn' => true
-    ]
-]); ?>
+    'template' => '{input}',
+    'pickButtonIcon' => 'glyphicon glyphicon-time',
+
+]);?>
+
+<?= $form->field($reservationForm, 'date_of_departure')->widget(DateTimePicker::className(), [
+    'size' => 'ms',
+    'template' => '{input}',
+    'pickButtonIcon' => 'glyphicon glyphicon-time',
+
+]);?>
+
 
 <?php if ($roomsFree): ?>
     <?= $form->field($reservationForm, 'type_rooms')->dropDownList($roomsFree);
