@@ -26,10 +26,9 @@ CREATE TABLE `clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `reservation_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +37,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Макс','test@yandex.ru',1);
+INSERT INTO `clients` VALUES (1,'Макс','test@yandex.ru'),(2,'Макс','gnedasch2011@yandex.ru'),(3,'Макс','gnedasch2222011@yandex.ru'),(4,'Макс','email@yandex.ru'),(5,'Маакс','ya@ya.ru'),(6,'',''),(7,'Макс','gnedasch2011@yyandex.ru');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +57,7 @@ CREATE TABLE `reservation` (
   `client_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=581 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +66,7 @@ CREATE TABLE `reservation` (
 
 LOCK TABLES `reservation` WRITE;
 /*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES (3,1,'1','2','2',3),(4,1,'1','2','2',3);
+INSERT INTO `reservation` VALUES (572,4,NULL,'','',6),(573,4,NULL,'','',6),(574,4,NULL,'','',6),(575,1,NULL,'2021-09-10 10:50','2021-09-30 18:55',7),(576,1,NULL,'2021-09-10 10:50','2021-09-30 18:55',7),(577,2,NULL,'2021-09-10 10:50','2021-09-30 18:55',7),(578,3,NULL,'2021-09-10 10:50','2021-09-30 18:55',7),(579,3,NULL,'2021-09-10 10:50','2021-09-30 18:55',7),(580,3,NULL,'2021-09-10 10:50','2021-09-30 18:55',7);
 /*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-09 17:58:44
+-- Dump completed on 2021-09-10 11:02:23

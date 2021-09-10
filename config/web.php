@@ -12,6 +12,13 @@ $config = [
         '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
+        ],
             'multiparser' => [
                 'class' => 'multiparser\GetMultiContent',//класс
                 'message' => true,//Отображать вывод процесса работы скрипта, по умолчанию false
