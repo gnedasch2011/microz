@@ -64,6 +64,8 @@ class Rooms extends \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
+        $roomsFree = $rooms;
+
         if ($roomsReservation) {
             foreach ($roomsReservation as $roomsReserv) {
                 $rooomsReservationOut[$roomsReserv['type_rooms']] = $roomsReserv['count'];
@@ -73,7 +75,6 @@ class Rooms extends \yii\db\ActiveRecord
                 $count = 0;
 
                 $count = $rooms[$typeRoom] - $rooomsReservationOut[$typeRoom];
-//                $roomsFree[$typeRoom] = Rooms::returnName($typeRoom) . ' (' . $count . ' свободных номера)';
 
                 $roomsFree[$typeRoom] = $count;
             }
@@ -91,5 +92,19 @@ class Rooms extends \yii\db\ActiveRecord
         }
 
         return false;
+    }
+
+    public static function generateHtmlForSelect()
+    {
+
+        $freeRoom = self::getFreeRooms();
+
+        foreach ($freeRoom as $typeRoom => $count) {
+            $html[$typeRoom] = Rooms::returnName($typeRoom) . ' (' . $count . ' свободных номера)';
+        }
+
+        return $html;
+
+
     }
 }

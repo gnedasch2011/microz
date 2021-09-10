@@ -25,25 +25,20 @@ class BookingController extends Controller
     {
         $this->enableCsrfValidation = false;
 
-        $roomsFree = Rooms::getFreeRooms();
 
         $reservationForm = new ReservationForm();
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
             Reservation::createReservation($reservationForm);
         }
-        
-        
+
+        $htmlForSelect = Rooms::generateHtmlForSelect();
+
         return $this->render('/booking/RoomReservation', [
             'reservationForm' => $reservationForm,
-            'roomsFree' => $roomsFree ?? false,
+            'roomsFree' => $htmlForSelect ?? false,
 
         ]);
-    }
-
-    public function actionSearch()
-    {
-
     }
 
 
