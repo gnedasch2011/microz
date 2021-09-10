@@ -38,11 +38,27 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * render-free-rooms-for-this-day
+     * @throws \yii\base\InvalidArgumentException
+     */
     public function actionRenderFreeRoomsForThisDay()
     {
         $reservationForm = new ReservationForm();
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
+
+            $reserveInRange =  Reservation::getReserveInRange($reservationForm);
+
+
+            echo "<pre>"; print_r($reservationForm);die();
+            //Надо собрать все резервы в предлагаемом диапазоне
+            // и отнять от начального списка, то есть начало заезда
+            //не должно попасть в диапазон
+            
+            
+
+            echo "<pre>"; print_r($reservationForm);die();
             echo "<pre>"; print_r('f');die();
         } else {
           echo "<pre>"; print_r($reservationForm->errors);die();
