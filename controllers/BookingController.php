@@ -15,16 +15,13 @@ class BookingController extends Controller
 
     public function beforeAction($action)
     {
-        if ($action->id == 'room-reservation') {
-            $this->enableCsrfValidation = false;
-        }
+
+        $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
 
     public function actionRoomReservation()
     {
-        $this->enableCsrfValidation = false;
-
 
         $reservationForm = new ReservationForm();
 
@@ -39,6 +36,18 @@ class BookingController extends Controller
             'roomsFree' => $htmlForSelect ?? false,
 
         ]);
+    }
+
+    public function actionRenderFreeRoomsForThisDay()
+    {
+        $reservationForm = new ReservationForm();
+
+        if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
+            echo "<pre>"; print_r('f');die();
+        } else {
+          echo "<pre>"; print_r($reservationForm->errors);die();
+        }
+
     }
 
 

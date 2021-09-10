@@ -53,8 +53,6 @@ class Reservation extends \yii\db\ActiveRecord
     public static function createReservation($reservationForm)
     {
 
-        //Создать клиента, если он есть, то вернуть id
-
         $newClient = Clients::createNewClient($reservationForm);
 
         $newReservation = new self;
