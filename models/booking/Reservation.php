@@ -90,33 +90,18 @@ class Reservation extends \yii\db\ActiveRecord
 
     public static function getReserveInRange($reservationForm)
     {
-
-        $rows = (new \yii\db\Query())
-            ->select(['*'])
-            ->from('reservation')
-            ->where(['>=', strtotime($reservationForm->arrival_date), 'arrival_date'])
-            ->andWhere(['<=', strtotime($reservationForm->arrival_date), 'date_of_departure'])
-//            ->all()
-        ;
-        echo $rows->createCommand()->getRawSql();die();
-
-
+        //Те записи, которые зарезервированы на этот день
         $res = self::find()
             ->select('*')
-            ->where(['>=', strtotime($reservationForm->arrival_date), 'arrival_date'])
-            ->andWhere(['<=', strtotime($reservationForm->arrival_date), 'date_of_departure'])
-            //            ->all()
+            ->where(['>=', 'date_of_departure', strtotime($reservationForm->arrival_date),])
+            ->andWhere(['<=', 'arrival_date', strtotime($reservationForm->arrival_date),])
+                       ->all()
         ;
-        echo $res->createCommand()->getRawSql();
-        die();
-        echo "<pre>";
-        print_r($res);
-        die();
 
-
-        echo "<pre>";
-        print_r($reservationForm);
-        die();
+        echo "<pre>"; print_r($res);die();
+        
+        
+        
     }
 
 }
