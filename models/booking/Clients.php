@@ -43,7 +43,6 @@ class Clients extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'email' => 'Email',
-            'reservation_id' => 'Reservation ID',
         ];
     }
 
