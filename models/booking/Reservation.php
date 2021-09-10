@@ -24,6 +24,18 @@ class Reservation extends \yii\db\ActiveRecord
         return 'reservation';
     }
 
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->date_of_departure = strtotime($this->date_of_departure);
+        $this->arrival_date = strtotime($this->arrival_date);
+
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -52,13 +64,11 @@ class Reservation extends \yii\db\ActiveRecord
 
     public static function createReservation($reservationForm)
     {
-
         $newClient = Clients::createNewClient($reservationForm);
-
         $newReservation = new self;
         $newReservation->attributes = $reservationForm->attributes;
+        
         $newReservation->link('client', $newClient);
-
         self::sendMessageAboutReserv($newClient);
     }
 

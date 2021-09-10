@@ -19,7 +19,7 @@ class ReservationForm extends Model
     {
         return [
             ['name', 'string'],
-            [['name', 'email','arrival_date', 'date_of_departure' ], 'required','message' => 'Заполните пожалуйста'],
+            [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
             ['email', 'email'],
             ['arrival_date', 'dataCheckFreeDiapason'],
             ['date_of_departure', 'dataCheck'],
@@ -39,8 +39,7 @@ class ReservationForm extends Model
 
     public function dataCheckFreeDiapason($attribute, $params)
     {
-        echo "<pre>"; print_r($this);die();
-        
+
         if (strtotime($this->arrival_date) > strtotime($this->date_of_departure)) {
 
             $this->addError($attribute, 'Такого не может быть!');
