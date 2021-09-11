@@ -14,8 +14,8 @@ class m210908_151108_rooms extends Migration
     {
         $this->createTable('rooms', [
             'id' => $this->primaryKey()->notNull()->unique(),
-            'type_name' => $this->integer(10),
-            'count_rooms' => $this->string(45),
+            'type_name' => $this->string(45),
+            'count_rooms' => $this->integer(10),
         ]);
 
         $this->insert('rooms', [
