@@ -11,9 +11,14 @@ $form = ActiveForm::begin([
     ]
 
 ]) ?>
-    <a href="">Вернуться к поиску</a>
+    <a href="/booking/room-search">Вернуться к поиску</a>
 <h2>Бронирование комнаты</h2>
     <p>Дата заезда: <?= $reservationForm->arrival_date ;?></p>
+        <?php if($reservationForm->errors):?>
+            <?= 'Ошибка ввода даты' ;?>
+        <?php else:?>
+        
+        <?php endif;?>
     <p>Дата выезда: <?= $reservationForm->date_of_departure ;?></p>
 
 <?= $form->field($reservationForm, 'name') ?>

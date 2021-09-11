@@ -42,12 +42,10 @@ class BookingController extends Controller
     public function actionRoomReserve()
     {
         $reservationForm = new ReservationForm();
-        $searchForm = new SearchForm();
-
         $reservationForm->attributes = (\Yii::$app->request->get('searchForm'));
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
-
+            
             $newReserv = Reservation::createReservation($reservationForm);
 
            return $this->render('/booking/successReserve', [
@@ -56,7 +54,6 @@ class BookingController extends Controller
         }
 
         $freeRooms = Rooms::getFreeRoomsInTheRange($reservationForm);
-
         $htmlForSelect = Rooms::generateHtmlForSelect($reservationForm);
 
         return $this->render('/booking/reservation', [

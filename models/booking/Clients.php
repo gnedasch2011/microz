@@ -61,6 +61,17 @@ class Clients extends \yii\db\ActiveRecord
 
     }
 
+    public static function sendMessageAboutReserv($newClient,$newReservation)
+    {
+        \Yii::$app->mailer->compose()
+            ->setFrom('bron@yandex.ru')
+            ->setTo($newClient->email)
+            ->setSubject('Ваша бронь')
+            ->setTextBody('Ваша бронь')
+            ->setHtmlBody('<b>Ваша бронь</b>')
+            ->send();
+    }
+
 
 
 }

@@ -71,7 +71,7 @@ class Reservation extends \yii\db\ActiveRecord
         $newReservation->attributes = $reservationForm->attributes;
         $newReservation->link('client', $newClient);
 
-        self::sendMessageAboutReserv($newClient);
+        Clients::sendMessageAboutReserv($newClient, $newReservation);
 
         return $newReservation;
     }
@@ -81,16 +81,7 @@ class Reservation extends \yii\db\ActiveRecord
         return $this->hasOne(Clients::className(), ['id' => 'client_id']);
     }
 
-    public static function sendMessageAboutReserv($newClient)
-    {
-        \Yii::$app->mailer->compose()
-            ->setFrom('bron@yandex.ru')
-            ->setTo($newClient->email)
-            ->setSubject('Ваша бронь')
-            ->setTextBody('Ваша бронь')
-            ->setHtmlBody('<b>Ваша бронь</b>')
-            ->send();
-    }
+
 
     /**
      * Вернуть типы комнат занятые на этот день
