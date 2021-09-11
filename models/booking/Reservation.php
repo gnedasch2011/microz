@@ -3,6 +3,7 @@
 namespace app\models\booking;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "reservation".
@@ -67,7 +68,6 @@ class Reservation extends \yii\db\ActiveRecord
         $newClient = Clients::createNewClient($reservationForm);
         $newReservation = new self;
         $newReservation->attributes = $reservationForm->attributes;
-
         $newReservation->link('client', $newClient);
         self::sendMessageAboutReserv($newClient);
     }
@@ -88,20 +88,23 @@ class Reservation extends \yii\db\ActiveRecord
             ->send();
     }
 
+    /**
+     * Вернуть типы комнат занятые на этот день
+     * @param $reservationForm
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getReserveInRange($reservationForm)
     {
-        //Те записи, которые зарезервированы на этот день
         $res = self::find()
-            ->select('*')
+            ->select('type_rooms, COUNT(*) as count')
             ->where(['>=', 'date_of_departure', strtotime($reservationForm->arrival_date),])
             ->andWhere(['<=', 'arrival_date', strtotime($reservationForm->arrival_date),])
-                       ->all()
-        ;
+            ->groupBy('type_rooms')
+            ->asArray()
+            ->all();
 
-        echo "<pre>"; print_r($res);die();
-        
-        
-        
+        return $res;
+
     }
 
 }

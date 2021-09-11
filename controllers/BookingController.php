@@ -15,8 +15,8 @@ class BookingController extends Controller
 
     public function beforeAction($action)
     {
-
         $this->enableCsrfValidation = false;
+
         return parent::beforeAction($action);
     }
 
@@ -26,17 +26,26 @@ class BookingController extends Controller
         $reservationForm = new ReservationForm();
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
-            Reservation::createReservation($reservationForm);
+
+            //Выводим сколько есть свободных на эту дату
+            // и дальше уже форму
+
+
+            $freeRooms = Rooms::getFreeRoomsInTheRange($reservationForm);
+            //Reservation::createReservation($reservationForm);
         }
 
-        $htmlForSelect = Rooms::generateHtmlForSelect();
+        //Посчитать сколько на сегодняшний день
+        // $htmlForSelect = Rooms::generateHtmlForSelect();
 
         return $this->render('/booking/RoomReservation', [
             'reservationForm' => $reservationForm,
-            'roomsFree' => $htmlForSelect ?? false,
+            'freeRooms' => $freeRooms ?? false,
 
         ]);
     }
+
+
 
     /**
      * render-free-rooms-for-this-day
@@ -47,21 +56,20 @@ class BookingController extends Controller
         $reservationForm = new ReservationForm();
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
+            echo "<pre>";
+            print_r(Reservation::getReserveInRange());
+            die();
+            $reserveInRange = Reservation::getReserveInRange($reservationForm);
 
-            $reserveInRange =  Reservation::getReserveInRange($reservationForm);
-
-
-            echo "<pre>"; print_r($reservationForm);die();
             //Надо собрать все резервы в предлагаемом диапазоне
             // и отнять от начального списка, то есть начало заезда
             //не должно попасть в диапазон
-            
-            
 
-            echo "<pre>"; print_r($reservationForm);die();
-            echo "<pre>"; print_r('f');die();
+
         } else {
-          echo "<pre>"; print_r($reservationForm->errors);die();
+            echo "<pre>";
+            print_r($reservationForm->errors);
+            die();
         }
 
     }

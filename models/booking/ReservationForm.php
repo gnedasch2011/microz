@@ -20,7 +20,7 @@ class ReservationForm extends Model
         return [
             ['name', 'string'],
             [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
-            ['email', 'email'],
+//            ['email', 'email'],
             ['arrival_date', 'dataCheck'],
             ['date_of_departure', 'dataCheck'],
             ['type_rooms', 'integer'],
