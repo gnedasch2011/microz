@@ -55,10 +55,8 @@ class BookingController extends Controller
             ]);
         }
 
-
-        //Выводим сколько есть свободных на эту дату
         $freeRooms = Rooms::getFreeRoomsInTheRange($reservationForm);
-        //Посчитать сколько на сегодняшний день
+
         $htmlForSelect = Rooms::generateHtmlForSelect($reservationForm);
 
         return $this->render('/booking/reservation', [

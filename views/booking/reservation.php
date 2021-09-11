@@ -11,6 +11,7 @@ $form = ActiveForm::begin([
     ]
 
 ]) ?>
+    <a href="">Вернуться к поиску</a>
 <h2>Бронирование комнаты</h2>
     <p>Дата заезда: <?= $reservationForm->arrival_date ;?></p>
     <p>Дата выезда: <?= $reservationForm->date_of_departure ;?></p>

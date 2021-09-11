@@ -17,6 +17,7 @@ class SearchForm extends Model
         return [
             ['arrival_date', DataCheckValidator::class],
             ['date_of_departure', DataCheckValidator::class],
+            [['arrival_date','date_of_departure'], 'required'],
         ];
     }
 
