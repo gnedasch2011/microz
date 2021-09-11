@@ -11,22 +11,13 @@ $form = ActiveForm::begin([
     ]
 
 ]) ?>
+<h2>Бронирование комнаты</h2>
+    <p>Дата заезда: <?= $reservationForm->arrival_date ;?></p>
+    <p>Дата выезда: <?= $reservationForm->date_of_departure ;?></p>
+
 <?= $form->field($reservationForm, 'name') ?>
 <?= $form->field($reservationForm, 'email') ?>
 
-<?= $form->field($reservationForm, 'arrival_date')->widget(DateTimePicker::className(), [
-    'size' => 'ms',
-    'template' => '{input}',
-    'pickButtonIcon' => 'glyphicon glyphicon-time',
-
-]); ?>
-
-<?= $form->field($reservationForm, 'date_of_departure')->widget(DateTimePicker::className(), [
-    'size' => 'ms',
-    'template' => '{input}',
-    'pickButtonIcon' => 'glyphicon glyphicon-time',
-
-]); ?>
 
 <?php if ($freeRooms): ?>
     <?= $form->field($reservationForm, 'type_rooms')->dropDownList($htmlForSelect);

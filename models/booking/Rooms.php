@@ -81,9 +81,9 @@ class Rooms extends \yii\db\ActiveRecord
     public static function getFreeRoomsInTheRange($searchForm)
     {
         $rooms = ArrayHelper::map(self::find()->all(), 'id', 'count_rooms');
-        
+
         $roomsReservation = Reservation::getReserveInRange($searchForm);
-     
+       
         $roomsFree = $rooms;
 
         if ($roomsReservation) {

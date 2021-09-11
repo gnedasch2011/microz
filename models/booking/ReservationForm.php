@@ -20,7 +20,7 @@ class ReservationForm extends Model
     {
         return [
             ['name', 'string'],
-//            ['email', 'email'],
+            ['email', 'email', 'message'=>'Введите правильный емейл'],
                ['email', 'string'],
             [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
             ['arrival_date', DataCheckValidator::class],
@@ -31,7 +31,7 @@ class ReservationForm extends Model
 
     public function checkFreeRooms($attribute)
     {
-           if (!Rooms::checkFreeRoomsType($this)) {
+        if (!Rooms::checkFreeRoomsType($this)) {
             $this->addError($attribute, 'Извините, данный тип номеров уже забронировали');
         }
     }

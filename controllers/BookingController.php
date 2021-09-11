@@ -44,18 +44,18 @@ class BookingController extends Controller
         $reservationForm = new ReservationForm();
         $searchForm = new SearchForm();
 
-        $reservationForm->attributes =(\Yii::$app->request->get('searchForm'));
+        $reservationForm->attributes = (\Yii::$app->request->get('searchForm'));
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
 
-            //Reservation::createReservation($reservationForm);
+            Reservation::createReservation($reservationForm);
         }
+
 
         //Выводим сколько есть свободных на эту дату
         $freeRooms = Rooms::getFreeRoomsInTheRange($reservationForm);
-
         //Посчитать сколько на сегодняшний день
-         $htmlForSelect = Rooms::generateHtmlForSelect($reservationForm);
+        $htmlForSelect = Rooms::generateHtmlForSelect($reservationForm);
 
         return $this->render('/booking/reservation', [
             'reservationForm' => $reservationForm,
