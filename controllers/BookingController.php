@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\booking\Reservation;
 use app\models\booking\ReservationForm;
+use app\models\booking\SearchForm;
 use app\models\booking\Rooms;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -20,58 +21,47 @@ class BookingController extends Controller
         return parent::beforeAction($action);
     }
 
-    public function actionRoomReservation()
+    public function actionRoomSearch()
     {
 
-        $reservationForm = new ReservationForm();
+        $searchForm = new SearchForm();
 
-        if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
-
-            //Выводим сколько есть свободных на эту дату
-            // и дальше уже форму
-
-
-            $freeRooms = Rooms::getFreeRoomsInTheRange($reservationForm);
-            //Reservation::createReservation($reservationForm);
+        if ($searchForm->load(\Yii::$app->request->post()) && $searchForm->validate()) {
+            $this->redirect(['/booking/room-reserve',
+                'searchForm' => $searchForm
+            ]);
         }
 
-        //Посчитать сколько на сегодняшний день
-        // $htmlForSelect = Rooms::generateHtmlForSelect();
-
-        return $this->render('/booking/RoomReservation', [
-            'reservationForm' => $reservationForm,
-            'freeRooms' => $freeRooms ?? false,
+        return $this->render('/booking/search', [
+            'searchForm' => $searchForm,
 
         ]);
     }
 
 
-
-    /**
-     * render-free-rooms-for-this-day
-     * @throws \yii\base\InvalidArgumentException
-     */
-    public function actionRenderFreeRoomsForThisDay()
+    public function actionRoomReserve()
     {
         $reservationForm = new ReservationForm();
+        $searchForm = new SearchForm();
+
+        $reservationForm->attributes =(\Yii::$app->request->get('searchForm'));
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
-            echo "<pre>";
-            print_r(Reservation::getReserveInRange());
-            die();
-            $reserveInRange = Reservation::getReserveInRange($reservationForm);
 
-            //Надо собрать все резервы в предлагаемом диапазоне
-            // и отнять от начального списка, то есть начало заезда
-            //не должно попасть в диапазон
-
-
-        } else {
-            echo "<pre>";
-            print_r($reservationForm->errors);
-            die();
+            //Reservation::createReservation($reservationForm);
         }
 
+        //Выводим сколько есть свободных на эту дату
+        $freeRooms = Rooms::getFreeRoomsInTheRange($searchForm);
+
+        //Посчитать сколько на сегодняшний день
+         $htmlForSelect = Rooms::generateHtmlForSelect($searchForm);
+
+        return $this->render('/booking/reservation', [
+            'reservationForm' => $reservationForm,
+            'freeRooms' => $freeRooms ?? false,
+            'htmlForSelect' => $htmlForSelect ?? false,
+        ]);
     }
 
 

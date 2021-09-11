@@ -93,12 +93,12 @@ class Reservation extends \yii\db\ActiveRecord
      * @param $reservationForm
      * @return array|\yii\db\ActiveRecord[]
      */
-    public static function getReserveInRange($reservationForm)
+    public static function getReserveInRange($searchForm)
     {
         $res = self::find()
             ->select('type_rooms, COUNT(*) as count')
-            ->where(['>=', 'date_of_departure', strtotime($reservationForm->arrival_date),])
-            ->andWhere(['<=', 'arrival_date', strtotime($reservationForm->arrival_date),])
+            ->where(['>=', 'date_of_departure', strtotime($searchForm->arrival_date),])
+            ->andWhere(['<=', 'arrival_date', strtotime($searchForm->arrival_date),])
             ->groupBy('type_rooms')
             ->asArray()
             ->all();

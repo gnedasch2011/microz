@@ -19,38 +19,20 @@ class ReservationForm extends Model
     {
         return [
             ['name', 'string'],
-            [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
 //            ['email', 'email'],
-            ['arrival_date', 'dataCheck'],
-            ['date_of_departure', 'dataCheck'],
-            ['type_rooms', 'integer'],
-          ['type_rooms', 'checkFreeRooms'],
+               ['email', 'string'],
+            [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
+            ['arrival_date', 'string'],
+            ['date_of_departure', 'string'],
+            ['type_rooms', 'checkFreeRooms'],
         ];
     }
 
-    public function dataCheck($attribute, $params)
+    public function checkFreeRooms($attribute)
     {
-        if (strtotime($this->arrival_date) > strtotime($this->date_of_departure)) {
-
-            $this->addError($attribute, 'Такого не может быть!');
+           if (!Rooms::checkFreeRoomsType($this)) {
+            $this->addError($attribute, 'Извините, данный тип номеров уже забронировали');
         }
-
-    }
-
-    public function dataCheckFreeDiapason($attribute, $params)
-    {
-        if (strtotime($this->arrival_date) > strtotime($this->date_of_departure)) {
-            $this->addError($attribute, 'Такого не может быть!');
-        }
-
-    }
-
-    public function checkFreeRooms($attribute, $params)
-    {
-        if (!Rooms::checkFreeRooms($this->type_rooms)) {
-            $this->addError($attribute, 'Свободных номеров нет');
-        }
-
     }
 
     public function attributeLabels()

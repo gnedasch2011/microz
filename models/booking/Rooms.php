@@ -53,35 +53,36 @@ class Rooms extends \yii\db\ActiveRecord
         return $name['type_name'];
     }
 
-    public static function checkFreeRooms($type): bool
-    {
-        $freeRooms = self::getFreeRooms();
+    public static function checkFreeRoomsType($reservationForm): bool
+    {    
+        $freeRooms = self::getFreeRoomsInTheRange($reservationForm);
 
-        if ($freeRooms[$type] > 0) {
+        if ($freeRooms[$reservationForm->type_rooms] > 0) {
             return true;
         }
 
         return false;
     }
 
-    public static function generateHtmlForSelect()
+    public static function generateHtmlForSelect($searchForm)
     {
 
-        $freeRoom = self::getFreeRooms();
+        $freeRoom = self::getFreeRoomsInTheRange($searchForm);
 
         foreach ($freeRoom as $typeRoom => $count) {
             $html[$typeRoom] = Rooms::returnName($typeRoom) . ' (' . $count . ' свободных номера)';
         }
+
         return $html;
 
 
     }
 
-    public static function getFreeRoomsInTheRange($reservationForm)
+    public static function getFreeRoomsInTheRange($searchForm)
     {
         $rooms = ArrayHelper::map(self::find()->all(), 'id', 'count_rooms');
-
-        $roomsReservation =  Reservation::getReserveInRange($reservationForm);
+        
+        $roomsReservation = Reservation::getReserveInRange($searchForm);
 
         $roomsFree = $rooms;
 
@@ -93,7 +94,7 @@ class Rooms extends \yii\db\ActiveRecord
             foreach ($rooms as $typeRoom => $countRoom) {
                 $count = 0;
 
-                if(isset($rooomsReservationOut[$typeRoom])){
+                if (isset($rooomsReservationOut[$typeRoom])) {
                     $count = $rooms[$typeRoom] - $rooomsReservationOut[$typeRoom];
 
                     $roomsFree[$typeRoom] = $count;
@@ -106,7 +107,7 @@ class Rooms extends \yii\db\ActiveRecord
         }
 
         return $roomsFree;
-        
-
     }
+
+
 }
