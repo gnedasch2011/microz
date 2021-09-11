@@ -4,6 +4,7 @@
 namespace app\models\booking;
 
 
+use app\models\booking\validators\DataCheckValidator;
 use yii\base\Model;
 
 class ReservationForm extends Model
@@ -22,8 +23,8 @@ class ReservationForm extends Model
 //            ['email', 'email'],
                ['email', 'string'],
             [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
-            ['arrival_date', 'string'],
-            ['date_of_departure', 'string'],
+            ['arrival_date', DataCheckValidator::class],
+            ['date_of_departure', DataCheckValidator::class],
             ['type_rooms', 'checkFreeRooms'],
         ];
     }
