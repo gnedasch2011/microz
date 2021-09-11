@@ -48,7 +48,11 @@ class BookingController extends Controller
 
         if ($reservationForm->load(\Yii::$app->request->post()) && $reservationForm->validate()) {
 
-            Reservation::createReservation($reservationForm);
+            $newReserv = Reservation::createReservation($reservationForm);
+
+           return $this->render('/booking/successReserve', [
+                'newReserv' => $newReserv,
+            ]);
         }
 
 

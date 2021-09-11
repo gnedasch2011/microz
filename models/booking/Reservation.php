@@ -66,11 +66,14 @@ class Reservation extends \yii\db\ActiveRecord
     public static function createReservation($reservationForm)
     {
         $newClient = Clients::createNewClient($reservationForm);
-        echo "<pre>"; print_r($newClient);die();
+
         $newReservation = new self;
         $newReservation->attributes = $reservationForm->attributes;
         $newReservation->link('client', $newClient);
+
         self::sendMessageAboutReserv($newClient);
+
+        return $newReservation;
     }
 
     public function getClient()

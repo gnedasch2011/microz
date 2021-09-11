@@ -21,7 +21,6 @@ class ReservationForm extends Model
         return [
             ['name', 'string'],
             ['email', 'email', 'message'=>'Введите правильный емейл'],
-               ['email', 'string'],
             [['name', 'email', 'arrival_date', 'date_of_departure'], 'required', 'message' => 'Заполните пожалуйста'],
             ['arrival_date', DataCheckValidator::class],
             ['date_of_departure', DataCheckValidator::class],
